@@ -1,0 +1,99 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local placeId = game.PlaceId
+
+-- Sea place IDs (real or simulated)
+local Sea1Places = {2753915549,  -- Sea 1
+}
+local Sea2Places = {4442272183}  -- Sea 2
+local Sea3Places = {7449423635}  -- Sea 3
+
+-- Function to check if player is in allowed sea
+local function isInAllowedSea()
+    for _, id in ipairs(Sea2Places) do
+        if placeId == id then return true end
+    end
+    for _, id in ipairs(Sea3Places) do
+        if placeId == id then return true end
+    end
+    return false
+end
+
+-- Kick player if in Sea 1
+for _, id in ipairs(Sea1Places) do
+    if placeId == id then
+        player:Kick("script only works in sea 2 or sea 3!")
+        return
+    end
+end
+
+-- Spawner Table
+local BloxSpawner = {}
+
+local fruits = {
+    "Dragon", "Leopard", "Dough", "Venom", "Shadow", "Blizzard", "Magma", "Light",
+    "Ice", "Dark", "Flame", "Bomb", "Spin", "Rubber", "Portal", "Control", "Revive", "Spring", "Chop"
+}
+
+local swords = {
+    "Dark Blade", "Yama", "Tushita", "Saber", "Rengoku", "Shisui", "Wando", "Canvander",
+    "Midnight Blade", "Buddy Sword", "Twin Hooks", "Cursed Dual Katana"
+}
+
+local permFruits = {
+    "Dragon", "Leopard", "Dough", "Venom", "Shadow", "Control", "Blizzard", "Portal"
+}
+
+function BloxSpawner.GetFruits()
+    return fruits
+end
+
+function BloxSpawner.GetSwords()
+    return swords
+end
+
+function BloxSpawner.GetPermanentFruits()
+    return permFruits
+end
+
+function BloxSpawner.SpawnFruit(fruitName)
+    if table.find(fruits, fruitName) then
+        print("✅ Spawned Fruit:", fruitName)
+        -- Add fruit to workspace or inventory
+    else
+        warn("❌ Invalid fruit:", fruitName)
+    end
+end
+
+function BloxSpawner.SpawnSword(swordName)
+    if table.find(swords, swordName) then
+        print("✅ Spawned Sword:", swordName)
+        -- Add sword to player's inventory
+    else
+        warn("❌ Invalid sword:", swordName)
+    end
+end
+
+function BloxSpawner.GrantPermanentFruit(fruitName)
+    if table.find(permFruits, fruitName) then
+        print("✅ Granted Permanent Fruit:", fruitName)
+        -- Simulate ownership of the permanent fruit
+    else
+        warn("❌ Invalid permanent fruit:", fruitName)
+    end
+end
+
+function BloxSpawner.Load()
+    print("📦 BloxSpawner UI Loaded")
+    -- Add GUI here if needed
+end
+
+-- ✅ Activate script if in Sea 2 or Sea 3
+if isInAllowedSea() then
+    BloxSpawner.Load()
+    BloxSpawner.SpawnFruit("Dough")
+    BloxSpawner.SpawnSword("Yama")
+    BloxSpawner.GrantPermanentFruit("Dragon")
+else
+    player:Kick("script only works in sea 2 or sea 3!")
+end
