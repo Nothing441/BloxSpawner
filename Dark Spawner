@@ -1,0 +1,7 @@
+-- WARNING: This only kicks the player, it does not actually perm ban anyone.
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- Simulate permanent ban
+player:Kick("You Have Been Permanently Banned For Exploiting!")
